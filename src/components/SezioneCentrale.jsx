@@ -29,7 +29,7 @@ const SezioneCentrale = () => {
         "https://striveschool-api.herokuapp.com/api/profile/676000c40ea286001528b949",
         {
           headers: {
-            ContentType: 'application/json',
+            'Content-Type': 'application/json',
             Authorization:
               "Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwMDBjNDBlYTI4NjAwMTUyOGI5NDkiLCJpYXQiOjE3MzQ0NDk3NzAsImV4cCI6MTczNTY1OTM3MH0.UcdbMKKvw_2OKD6Z3-GVi4tONjrvqYmNqYg0zD9hOEE"
           },
@@ -57,6 +57,7 @@ const SezioneCentrale = () => {
           "https://striveschool-api.herokuapp.com/api/profile/676000c40ea286001528b949",
           {
             headers: {
+              'Content-Type': 'application/json',
               Authorization:
                 "Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwMDBjNDBlYTI4NjAwMTUyOGI5NDkiLCJpYXQiOjE3MzQ0NDk3NzAsImV4cCI6MTczNTY1OTM3MH0.UcdbMKKvw_2OKD6Z3-GVi4tONjrvqYmNqYg0zD9hOEE"
             }
