@@ -26,7 +26,7 @@ const SezioneCentrale = () => {
     event.preventDefault();
     try {
       const response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/profile/676000c40ea286001528b949",
+        "https://striveschool-api.herokuapp.com/api/profile/",
         {
           headers: {
             'Content-Type': 'application/json',
@@ -40,7 +40,8 @@ const SezioneCentrale = () => {
       );
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        console.log(data); 
+        location.reload();
       } else {
         throw new Error("Errore nell'importazione della fetch");
       }
