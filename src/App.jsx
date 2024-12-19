@@ -4,9 +4,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import SezioneCentrale from "./components/SezioneCentrale";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import CreaModificaEsperienze from "./components/CreaModificaEsperienze";
 import TopBar from "./components/TopBar";
-import Footer from "./components/Footer";
+
+import ComponenteHome from "./components/ComponenteHome";
+
 function App() {
   return (
     <>
@@ -20,9 +21,8 @@ function App() {
         <Routes>
           {" "}
           <Route path="/" element={<SezioneCentrale />} />
-          <Route path="/Esperienze" element={<CreaModificaEsperienze />} />
+          <Route path="/Home" element={<ComponenteHome />} />
         </Routes>
-        <Footer />
       </BrowserRouter>
     </>
   );
