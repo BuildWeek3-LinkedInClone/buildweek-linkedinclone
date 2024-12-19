@@ -4,14 +4,13 @@ import { FileCheck, PencilFill } from "react-bootstrap-icons";
 import Sliders from "./Sliders";
 import Aside from "./Aside";
 import SezLatBenv from "./SezLatBenv";
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
-
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
 
 const SezioneCentrale = () => {
   const [profileData, setProfileData] = useState([]);
 
-  const [update, setUpdateData] = useState([])
+  const [update, setUpdateData] = useState([]);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -19,7 +18,7 @@ const SezioneCentrale = () => {
     const { name, value } = event.target;
     setUpdateData((prevQuery) => ({
       ...prevQuery,
-      [name]: value, 
+      [name]: value
     }));
   };
   const handleSubmit = async (event) => {
@@ -29,54 +28,53 @@ const SezioneCentrale = () => {
         "https://striveschool-api.herokuapp.com/api/profile/",
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization:
-              "Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwMDBjNDBlYTI4NjAwMTUyOGI5NDkiLCJpYXQiOjE3MzQ0NDk3NzAsImV4cCI6MTczNTY1OTM3MH0.UcdbMKKvw_2OKD6Z3-GVi4tONjrvqYmNqYg0zD9hOEE"
+              "Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwMDA4YjBlYTI4NjAwMTUyOGI5NDciLCJpYXQiOjE3MzQzNTEyMzgsImV4cCI6MTczNTU2MDgzOH0.A7_dxDQ2czJRBCzIe0Af1bv9bVqqFDSEYrd-3JI-pPo"
           },
-          method: "PUT"
-          , body: JSON.stringify(update)
-
+          method: "PUT",
+          body: JSON.stringify(update)
         }
       );
       if (response.ok) {
         const data = await response.json();
-        console.log(data); 
-        location.reload();
+        fetchProfilo();
+        console.log(data);
       } else {
         throw new Error("Errore nell'importazione della fetch");
       }
     } catch (error) {
       console.error("Errore di caricamento,", error);
     }
+  };
 
-  }
-
-  useEffect(() => {
-    const fetchProfilo = async () => {
-      try {
-        const response = await fetch(
-          "https://striveschool-api.herokuapp.com/api/profile/676000c40ea286001528b949",
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization:
-                "Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwMDBjNDBlYTI4NjAwMTUyOGI5NDkiLCJpYXQiOjE3MzQ0NDk3NzAsImV4cCI6MTczNTY1OTM3MH0.UcdbMKKvw_2OKD6Z3-GVi4tONjrvqYmNqYg0zD9hOEE"
-            }
+  const fetchProfilo = async () => {
+    try {
+      const response = await fetch(
+        "https://striveschool-api.herokuapp.com/api/profile/me",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzYwMDA4YjBlYTI4NjAwMTUyOGI5NDciLCJpYXQiOjE3MzQzNTEyMzgsImV4cCI6MTczNTU2MDgzOH0.A7_dxDQ2czJRBCzIe0Af1bv9bVqqFDSEYrd-3JI-pPo"
           }
-        );
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log(data);
-          setProfileData(data);
-          setUpdateData(data);
-        } else {
-          throw new Error("Errore nell'importazione della fetch");
         }
-      } catch (error) {
-        console.error("Errore di caricamento,", error);
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+
+        setProfileData(data);
+        setUpdateData(data);
+      } else {
+        throw new Error("Errore nell'importazione della fetch");
       }
-    };
+    } catch (error) {
+      console.error("Errore di caricamento,", error);
+    }
+  };
+  useEffect(() => {
     fetchProfilo();
   }, []);
 
@@ -126,6 +124,11 @@ const SezioneCentrale = () => {
                         onClick={handleShow}
                         variant="btn btn-light"
                         className="rounded-circle"
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                          objectFit: "cover"
+                        }}
                       >
                         {" "}
                         <PencilFill style={{ fontSize: "21px" }} />{" "}
@@ -135,12 +138,14 @@ const SezioneCentrale = () => {
                           <Modal.Title>Modifica Presentazione</Modal.Title>
                         </Modal.Header>
                         <Form onSubmit={handleSubmit}>
-                        <Modal.Body>
-                          
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                          <Modal.Body>
+                            <Form.Group
+                              className="mb-3"
+                              controlId="exampleForm.ControlInput1"
+                            >
                               <Form.Label>Nome</Form.Label>
                               <Form.Control
-                              name="name"
+                                name="name"
                                 onChange={handleChange}
                                 value={update.name}
                                 type="text"
@@ -148,21 +153,27 @@ const SezioneCentrale = () => {
                                 autoFocus
                               />
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Form.Group
+                              className="mb-3"
+                              controlId="exampleForm.ControlInput1"
+                            >
                               <Form.Label>Cognome</Form.Label>
                               <Form.Control
-                              name="surname"
-                              onChange={handleChange}
+                                name="surname"
+                                onChange={handleChange}
                                 value={update.surname}
                                 type="text"
                                 placeholder=" "
                                 autoFocus
                               />
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Form.Group
+                              className="mb-3"
+                              controlId="exampleForm.ControlInput1"
+                            >
                               <Form.Label>Email</Form.Label>
                               <Form.Control
-                              name="email"
+                                name="email"
                                 value={update.email}
                                 onChange={handleChange}
                                 type="name@example.com"
@@ -170,10 +181,13 @@ const SezioneCentrale = () => {
                                 autoFocus
                               />
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Form.Group
+                              className="mb-3"
+                              controlId="exampleForm.ControlInput1"
+                            >
                               <Form.Label>Username</Form.Label>
                               <Form.Control
-                              name="username"
+                                name="username"
                                 value={update.username}
                                 onChange={handleChange}
                                 type="text"
@@ -181,32 +195,41 @@ const SezioneCentrale = () => {
                                 autoFocus
                               />
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Form.Group
+                              className="mb-3"
+                              controlId="exampleForm.ControlInput1"
+                            >
                               <Form.Label>Title</Form.Label>
                               <Form.Control
-                              name="title"
-                              onChange={handleChange}
+                                name="title"
+                                onChange={handleChange}
                                 value={update.title}
                                 type="text"
                                 placeholder=" "
                                 autoFocus
                               />
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Form.Group
+                              className="mb-3"
+                              controlId="exampleForm.ControlInput1"
+                            >
                               <Form.Label>Bio</Form.Label>
                               <Form.Control
-                              name="bio"
-                              onChange={handleChange}
+                                name="bio"
+                                onChange={handleChange}
                                 value={update.bio}
                                 type="text"
                                 placeholder=" "
                                 autoFocus
                               />
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Form.Group
+                              className="mb-3"
+                              controlId="exampleForm.ControlInput1"
+                            >
                               <Form.Label>Area</Form.Label>
                               <Form.Control
-                              name="area"
+                                name="area"
                                 value={update.area}
                                 type="text"
                                 onChange={handleChange}
@@ -214,10 +237,13 @@ const SezioneCentrale = () => {
                                 autoFocus
                               />
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Form.Group
+                              className="mb-3"
+                              controlId="exampleForm.ControlInput1"
+                            >
                               <Form.Label>Image</Form.Label>
                               <Form.Control
-                              name="image"
+                                name="image"
                                 value={update.image}
                                 onChange={handleChange}
                                 type="text"
@@ -226,16 +252,18 @@ const SezioneCentrale = () => {
                               />
                             </Form.Group>
                           </Modal.Body>
-                        <Modal.Footer>
-                      
-                          <Button variant="secondary" onClick={handleClose}>
-                            Close
-                          </Button>
-                          <Button variant="primary" type="submit">
-                            Save Changes
-                          </Button>
-                          
-                        </Modal.Footer>
+                          <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                              Chiudi
+                            </Button>
+                            <Button
+                              variant="primary"
+                              type="submit"
+                              onClick={handleClose}
+                            >
+                              Salva
+                            </Button>
+                          </Modal.Footer>
                         </Form>
                       </Modal>
                     </div>
